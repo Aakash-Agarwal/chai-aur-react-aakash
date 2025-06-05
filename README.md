@@ -29,7 +29,7 @@ Concepts covered in projects
 5. useRef hook
 6. Trigerring a functino call on change of a DOM element
 
-# [06currencyConvertor](./06currencyConverter/)
-1. Currency Convertor project
-2. Creating custom hook
-3. Trigerring API endpoint in React
+# [07reactRouters](./07reactRouters/)
+1. Simple web project with multiple pages
+2. Creating routing in React App
+3. Passing values from url
