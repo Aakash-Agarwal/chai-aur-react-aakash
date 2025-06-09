@@ -33,3 +33,9 @@ Concepts covered in projects
 1. Simple web project with multiple pages
 2. Creating routing in React App
 3. Passing values from url
+
+# [08miniContext](./08miniContext/)
+1. Context API introduction
+2. Context creation
+3. Context providers and values to provide
+4. Usage of Context providers to set and use values
