@@ -39,3 +39,7 @@ Concepts covered in projects
 2. Context creation
 3. Context providers and values to provide
 4. Usage of Context providers to set and use values
+
+# [09themeSwitcher](./09themeswitcher/)
+1. Context API alternate way of working
+2. Simple theme switcher project using context api
