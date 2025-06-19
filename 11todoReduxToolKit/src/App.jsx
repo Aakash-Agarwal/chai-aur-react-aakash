@@ -1,23 +1,25 @@
 import {useEffect} from 'react'
 import {TodoForm, TodoItem} from "./components/index.js";
 import {useSelector, useDispatch} from 'react-redux'
+import {store} from "./app/store.js";
 
 
 function App() {
     const todos = useSelector(state => state.todos)
-    const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     const todosList = JSON.parse(localStorage.getItem("todosList"))
-    //
-    //     if (todosList && todosList.length > 0) {
-    //
-    //     }
-    // }, []);
-    //
-    // useEffect(() => {
-    //     localStorage.setItem("todosList", JSON.stringify(todos))
-    // }, [todos]);
+    useEffect(() => {
+        const todosList = JSON.parse(localStorage.getItem("todosList"))
+        if (todosList && todosList.length > 0) {
+            store.dispatch({
+                type: 'todo/setTodos',
+                payload: todosList
+            })
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("todosList", JSON.stringify(todos))
+    }, [todos]);
 
     return (
         <>
