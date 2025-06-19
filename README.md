@@ -43,3 +43,7 @@ Concepts covered in projects
 # [09themeSwitcher](./09themeswitcher/)
 1. Context API alternate way of working
 2. Simple theme switcher project using context api
+
+# [10todoContextLocalStorage](./10todoContextLocalStorage/)
+1. Todo application using Context API
+2. Local Storage
