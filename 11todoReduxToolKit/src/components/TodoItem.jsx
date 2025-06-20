@@ -1,10 +1,11 @@
-import {useState} from 'react';
-import {useDispatch} from "react-redux";
-import {removeTodo, updateTodo, toggleTodo} from "../features/todo/todoSlice.js";
+import React from 'react';
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { removeTodo, toggleTodo, updateTodo } from "../features/todo/todoSlice.js";
 
 function TodoItem({todo}) {
     const [isTodoEditable, setIsTodoEditable] = useState(false);
-    const [todoMsg, setTodoMsg] = useState(!todo ? '' : todo.text);
+    const [todoMsg, setTodoMsg] = useState(todo.text);
     const dispatch = useDispatch()
     return (
         <div
@@ -29,6 +30,7 @@ function TodoItem({todo}) {
             />
             {/* Edit, Save Button */}
             <button
+                aria-label='Edit Todo'
                 className="inline-flex w-8 h-8 rounded-lg text-sm border border-black/10 justify-center items-center bg-gray-50 hover:bg-gray-100 shrink-0 disabled:opacity-50"
                 onClick={() => {
                     if (todo.completed) return;
@@ -44,6 +46,7 @@ function TodoItem({todo}) {
             </button>
             {/* Delete Todo Button */}
             <button
+                aria-label='Delete Todo'
                 className="inline-flex w-8 h-8 rounded-lg text-sm border border-black/10 justify-center items-center bg-gray-50 hover:bg-gray-100 shrink-0"
                 onClick={() => dispatch(removeTodo(todo.id))}
             >

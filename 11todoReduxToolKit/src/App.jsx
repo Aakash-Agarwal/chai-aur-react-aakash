@@ -1,19 +1,20 @@
-import {useEffect} from 'react'
-import {TodoForm, TodoItem} from "./components/index.js";
-import {useSelector, useDispatch} from 'react-redux'
-import {store} from "./app/store.js";
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { TodoForm, TodoItem } from "./components/index.js";
+import { setTodos } from './features/todo/todoSlice.js';
 
 function App() {
-    const todos = useSelector(state => state.todos)
+    const todos = useSelector(state => state.todoReducers.todos)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        const todosList = JSON.parse(localStorage.getItem("todosList"))
-        if (todosList && todosList.length > 0) {
-            store.dispatch({
-                type: 'todo/setTodos',
-                payload: todosList
-            })
+        try {
+            const todosList = JSON.parse(localStorage.getItem("todosList"))
+            if (todosList && todosList.length > 0) {
+                dispatch(setTodos([...todosList]))
+            }
+        } catch (error) {
+            console.error("Error loading todos from localStorage:", error)
         }
     }, []);
 
