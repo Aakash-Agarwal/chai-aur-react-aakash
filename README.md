@@ -47,3 +47,9 @@ Concepts covered in projects
 # [10todoContextLocalStorage](./10todoContextLocalStorage/)
 1. Todo application using Context API
 2. Local Storage
+3. 
+# [11todoReduxToolKit](./11todoReduxToolKit/)
+1. Todo application using Redux toolkit and React
+2. Test Cases using github-copilot
+3. Documentation using github-copilot
+4. Code Review using github-copilot

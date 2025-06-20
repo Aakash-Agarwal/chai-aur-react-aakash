@@ -20,17 +20,18 @@ A simple, responsive Todo List app built with React, Redux Toolkit, and Tailwind
 2. **Open in Browser:**  
    Visit [http://localhost:5173/](http://localhost:5173/) in your browser.
 
-3. **Manage Todos:**  
-   - Add a new todo using the input field and "Add" button.
-   - Edit or complete todos using the icons and checkboxes.
-   - Delete todos you no longer need.
+3. **Manage Todos:**
+    - Add a new todo using the input field and "Add" button.
+    - Edit or complete todos using the icons and checkboxes.
+    - Delete todos you no longer need.
 
 4. **Persistence:**  
    Your todos are automatically saved and will be available the next time you open the app.
 
 ## Development
 
-- Built with [React](https://react.dev/), [Redux Toolkit](https://redux-toolkit.js.org/), and [Tailwind CSS](https://tailwindcss.com/).
+- Built with [React](https://react.dev/), [Redux Toolkit](https://redux-toolkit.js.org/),
+  and [Tailwind CSS](https://tailwindcss.com/).
 - Uses [Vite](https://vitejs.dev/) for fast development and hot module replacement.
 
 ## Scripts

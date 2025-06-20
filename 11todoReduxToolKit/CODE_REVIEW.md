@@ -5,14 +5,18 @@
 ### 1. Functionality Correctness
 
 - **Redux Store Structure:**  
-  The store is configured with `reducer: todoReducer` (see `src/app/store.js`). This sets the root state to the todo slice directly, so `state.todos` in selectors is correct. However, if more slices are added in the future, this will need to be changed to an object with named reducers.
+  The store is configured with `reducer: todoReducer` (see `src/app/store.js`). This sets the root state to the todo
+  slice directly, so `state.todos` in selectors is correct. However, if more slices are added in the future, this will
+  need to be changed to an object with named reducers.
 
 - **LocalStorage Initialization:**  
-  In `App.jsx`, todos are loaded from localStorage on mount and dispatched with a custom action type `'todo/setTodos'`. However, this action is not defined in the slice, which may cause issues.  
+  In `App.jsx`, todos are loaded from localStorage on mount and dispatched with a custom action type `'todo/setTodos'`.
+  However, this action is not defined in the slice, which may cause issues.  
   **Suggestion:** Add a `setTodos` reducer in `todoSlice.js` for proper initialization.
 
 - **Component State Initialization:**  
-  In `TodoItem.jsx`, `useState(!todo ? '' : todo.text)` is used. Since `todo` should always be defined, this can be simplified to `useState(todo.text)`.
+  In `TodoItem.jsx`, `useState(!todo ? '' : todo.text)` is used. Since `todo` should always be defined, this can be
+  simplified to `useState(todo.text)`.
 
 - **Editing Completed Todos:**  
   The UI disables editing for completed todos, which matches the requirements.
@@ -35,16 +39,19 @@
 ### 3. Refactoring Suggestions
 
 - **Reducer Mutations:**  
-  In `removeTodo`, `updateTodo`, and `toggleTodo`, the state is reassigned (e.g., `state.todos = ...`). While Immer handles this, using `state.todos.splice` or `state.todos[index] = ...` is more idiomatic for Redux Toolkit.
+  In `removeTodo`, `updateTodo`, and `toggleTodo`, the state is reassigned (e.g., `state.todos = ...`). While Immer
+  handles this, using `state.todos.splice` or `state.todos[index] = ...` is more idiomatic for Redux Toolkit.
 
 - **Repeated JSON Parsing:**  
-  In `App.jsx`, `localStorage.getItem("todosList")` is parsed on every mount. Consider error handling for malformed JSON.
+  In `App.jsx`, `localStorage.getItem("todosList")` is parsed on every mount. Consider error handling for malformed
+  JSON.
 
 - **Unnecessary Imports:**  
   In `App.jsx`, `useDispatch` is imported but not used.
 
 - **Tailwind Plugin Import:**  
-  In `vite.config.js`, `@tailwindcss/vite` is used, but the official Tailwind docs recommend using the PostCSS plugin. Ensure this is intentional and compatible.
+  In `vite.config.js`, `@tailwindcss/vite` is used, but the official Tailwind docs recommend using the PostCSS plugin.
+  Ensure this is intentional and compatible.
 
 ### 4. Bug Fixes
 
@@ -53,7 +60,8 @@
   **Fix:** Add a `setTodos` reducer to `todoSlice.js`.
 
 - **Store Import in App:**  
-  The store is imported and used directly in `App.jsx` for dispatching. Prefer using `useDispatch` from `react-redux` for consistency.
+  The store is imported and used directly in `App.jsx` for dispatching. Prefer using `useDispatch` from `react-redux`
+  for consistency.
 
 ### 5. General Suggestions
 
@@ -81,7 +89,8 @@
 ### 1. Functionality Correctness
 
 - **Incorrect Dispatch on Initialization:**  
-  In `App.jsx`, the effect for loading from localStorage dispatches `dispatch(todosList)`. This is incorrect; you should dispatch an action, not the todos array directly.  
+  In `App.jsx`, the effect for loading from localStorage dispatches `dispatch(todosList)`. This is incorrect; you should
+  dispatch an action, not the todos array directly.  
   **Fix:** Define and use a `setTodos` action in your slice, e.g. `dispatch(setTodos(todosList))`.
 
 - **Error Handling for localStorage:**  
@@ -97,7 +106,8 @@
   The import statements are clean and correct.
 
 - **Selector Usage:**  
-  The selector `state => state.todos` assumes the root state is the todos array. If you refactor the store to use multiple reducers, this will need to be updated.
+  The selector `state => state.todos` assumes the root state is the todos array. If you refactor the store to use
+  multiple reducers, this will need to be updated.
 
 ### 3. Refactoring Suggestions
 
@@ -147,19 +157,25 @@
 ### 1. Functionality Correctness (with BRD perspective)
 
 - **Redux Store Structure:**  
-  The current store uses `reducer: {todoReducers: todoReducer}`. This means the todos are accessed via `state.todoReducers.todos`. However, in `App.jsx`, the selector is `state => state.todos`, which will not work and results in an empty list.  
+  The current store uses `reducer: {todoReducers: todoReducer}`. This means the todos are accessed via
+  `state.todoReducers.todos`. However, in `App.jsx`, the selector is `state => state.todos`, which will not work and
+  results in an empty list.  
   **Fix:** Update the selector in `App.jsx` to `state => state.todoReducers.todos`.
 
 - **LocalStorage Initialization:**  
-  The app loads todos from localStorage and dispatches `setTodo([...todosList])`. This matches the BRD requirement for persistence. However, the reducer is named `setTodo`, which is misleading since it sets the entire todos array.  
-  **Suggestion:** Rename the reducer and action to `setTodos` for clarity and consistency with Redux conventions and the BRD.
+  The app loads todos from localStorage and dispatches `setTodo([...todosList])`. This matches the BRD requirement for
+  persistence. However, the reducer is named `setTodo`, which is misleading since it sets the entire todos array.  
+  **Suggestion:** Rename the reducer and action to `setTodos` for clarity and consistency with Redux conventions and the
+  BRD.
 
 - **Reducers Implementation:**  
-  The reducers in `todoSlice.js` reference `state.todoReducers.todos`, but the slice's state is already scoped to the slice. This is incorrect and will cause runtime errors.  
+  The reducers in `todoSlice.js` reference `state.todoReducers.todos`, but the slice's state is already scoped to the
+  slice. This is incorrect and will cause runtime errors.  
   **Fix:** Change all references from `state.todoReducers.todos` to `state.todos` inside the slice.
 
 - **Functional Completeness:**  
-  All BRD-required actions (add, edit, complete, delete) are implemented. The UI disables editing for completed todos, as required.
+  All BRD-required actions (add, edit, complete, delete) are implemented. The UI disables editing for completed todos,
+  as required.
 
 ### 2. Code Structuring
 
@@ -167,7 +183,8 @@
   Use plural naming for reducers that set arrays (e.g., `setTodos`).
 
 - **Store Scalability:**  
-  The store is set up for scalability with an object of reducers, but selectors and reducers must be updated accordingly.
+  The store is set up for scalability with an object of reducers, but selectors and reducers must be updated
+  accordingly.
 
 - **Component State Initialization:**  
   In `TodoItem.jsx`, `useState(todo.text)` is used, which is correct.
@@ -221,7 +238,7 @@
   // ...existing code...
   ```
 
-- **C. Rename setTodo to setTodos in todoSlice.js and App.jsx:**  
+- **C. Rename setTodo to setTodos in todoSlice.js and App.jsx:**
   ```javascript
   // In todoSlice.js
   reducers: {
@@ -253,7 +270,8 @@
   Already present, but ensure `todosList` is an array before dispatching.
 
 - **E. Tailwind Plugin Usage:**  
-  The use of `@tailwindcss/vite` is non-standard. The official Tailwind docs recommend using the PostCSS plugin. Consider switching to the recommended setup for better compatibility and future-proofing.
+  The use of `@tailwindcss/vite` is non-standard. The official Tailwind docs recommend using the PostCSS plugin.
+  Consider switching to the recommended setup for better compatibility and future-proofing.
 
 - **F. Accessibility:**  
   Add labels to form controls for accessibility. For example, in `TodoForm.jsx`:
@@ -277,8 +295,8 @@
   Update documentation to reflect the correct store structure and action naming.
 
 - **Maintainability:**  
-  Use consistent naming and structure for reducers and actions for easier future enhancements (e.g., adding tags, due dates as suggested in the BRD).
-
+  Use consistent naming and structure for reducers and actions for easier future enhancements (e.g., adding tags, due
+  dates as suggested in the BRD).
 
 ---
 
@@ -287,18 +305,22 @@
 ### 1. Functionality Correctness (BRD Alignment)
 
 - **Store and Selector Consistency:**  
-  The Redux store is configured with `{todoReducers: todoReducer}` and all selectors now use `state.todoReducers.todos`, which matches the store structure. This ensures todos are correctly accessed and displayed, fulfilling the BRD's requirement for centralized state management.
+  The Redux store is configured with `{todoReducers: todoReducer}` and all selectors now use `state.todoReducers.todos`,
+  which matches the store structure. This ensures todos are correctly accessed and displayed, fulfilling the BRD's
+  requirement for centralized state management.
 
 - **Persistence:**  
-  Todos are loaded from and saved to `localStorage` as required by the BRD. The code checks for valid data before dispatching to Redux.
+  Todos are loaded from and saved to `localStorage` as required by the BRD. The code checks for valid data before
+  dispatching to Redux.
 
-- **All Core Features Present:**  
-  - Add, edit, complete, and delete todos are implemented.
-  - Editing is disabled for completed todos, as specified.
-  - The UI is responsive and accessible, with form labels for screen readers.
+- **All Core Features Present:**
+    - Add, edit, complete, and delete todos are implemented.
+    - Editing is disabled for completed todos, as specified.
+    - The UI is responsive and accessible, with form labels for screen readers.
 
 - **Functional Completeness:**  
-  The application meets all functional requirements in the BRD. However, enhancements like due dates, tags, and filters are not present (as expected for MVP).
+  The application meets all functional requirements in the BRD. However, enhancements like due dates, tags, and filters
+  are not present (as expected for MVP).
 
 ### 2. Code Structuring
 
@@ -312,36 +334,37 @@
   Clean and consistent.
 
 - **Tailwind Integration:**  
-  Tailwind is imported via `@tailwindcss/vite`, but the official recommendation is to use PostCSS. This may affect future maintainability.
+  Tailwind is imported via `@tailwindcss/vite`, but the official recommendation is to use PostCSS. This may affect
+  future maintainability.
 
 ### 3. Refactoring Suggestions and Bug Fixes (with code suggestions)
 
 - **A. Tailwind Plugin Configuration:**  
   For long-term compatibility, switch from `@tailwindcss/vite` to the official PostCSS plugin.  
-  **How to fix:**  
-  1. Remove `@tailwindcss/vite` from `vite.config.js` and `package.json` dependencies.
-  2. Add a `postcss.config.js` file:
-     ```js
-     // filepath: d:\learn\fe\chai-aur-react-aakash\11todoReduxToolKit\postcss.config.js
-     module.exports = {
-       plugins: {
-         tailwindcss: {},
-         autoprefixer: {},
-       },
-     }
-     ```
-  3. Update `vite.config.js`:
-     ```javascript
-     // filepath: d:\learn\fe\chai-aur-react-aakash\11todoReduxToolKit\vite.config.js
-     import { defineConfig } from 'vite'
-     import react from '@vitejs/plugin-react'
-     // ...existing code...
-     export default defineConfig({
-       plugins: [react()],
-     })
-     // ...existing code...
-     ```
-  4. Remove `@tailwindcss/vite` from `package.json` dependencies.
+  **How to fix:**
+    1. Remove `@tailwindcss/vite` from `vite.config.js` and `package.json` dependencies.
+    2. Add a `postcss.config.js` file:
+       ```js
+       // filepath: d:\learn\fe\chai-aur-react-aakash\11todoReduxToolKit\postcss.config.js
+       module.exports = {
+         plugins: {
+           tailwindcss: {},
+           autoprefixer: {},
+         },
+       }
+       ```
+    3. Update `vite.config.js`:
+       ```javascript
+       // filepath: d:\learn\fe\chai-aur-react-aakash\11todoReduxToolKit\vite.config.js
+       import { defineConfig } from 'vite'
+       import react from '@vitejs/plugin-react'
+       // ...existing code...
+       export default defineConfig({
+         plugins: [react()],
+       })
+       // ...existing code...
+       ```
+    4. Remove `@tailwindcss/vite` from `package.json` dependencies.
 
 - **B. Defensive Checks for Todos List:**  
   In `App.jsx`, ensure `todosList` is an array before dispatching:
@@ -362,7 +385,8 @@
   ```
 
 - **C. Accessibility Improvements:**  
-  Add `aria-label` or visible labels for all interactive elements, especially buttons with only icons. Example for the delete button in `TodoItem.jsx`:
+  Add `aria-label` or visible labels for all interactive elements, especially buttons with only icons. Example for the
+  delete button in `TodoItem.jsx`:
   ```jsx
   // filepath: d:\learn\fe\chai-aur-react-aakash\11todoReduxToolKit\src\components\TodoItem.jsx
   // ...existing code...
@@ -407,7 +431,9 @@
 
 - **Version 1:** Initial review and recommendations.
 - **Version 2:** Focused review on initialization logic, error handling, and action dispatching.
-- **Version 3:** Comprehensive review for functionality correctness, code structuring, refactoring, and bug fixes, with code suggestions and BRD alignment.
-- **Version 4:** Final review with BRD alignment, accessibility, defensive coding, Tailwind config, and extensibility suggestions.
+- **Version 3:** Comprehensive review for functionality correctness, code structuring, refactoring, and bug fixes, with
+  code suggestions and BRD alignment.
+- **Version 4:** Final review with BRD alignment, accessibility, defensive coding, Tailwind config, and extensibility
+  suggestions.
 
 ---

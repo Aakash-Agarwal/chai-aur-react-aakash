@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addTodo } from "../features/todo/todoSlice.js";
+import {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {addTodo} from "../features/todo/todoSlice.js";
 
 function TodoForm() {
     const [todoMessage, setTodoMessage] = useState("")
@@ -24,7 +24,8 @@ function TodoForm() {
                 value={todoMessage}
                 onChange={(e) => setTodoMessage(e.target.value)}
             />
-            <button aria-label='Add Todo' type="submit" className="rounded-r-lg px-3 py-1 bg-green-600 text-white shrink-0">
+            <button aria-label='Add Todo' type="submit"
+                    className="rounded-r-lg px-3 py-1 bg-green-600 text-white shrink-0">
                 Add
             </button>
         </form>

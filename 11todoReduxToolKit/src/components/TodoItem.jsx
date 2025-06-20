@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { removeTodo, toggleTodo, updateTodo } from "../features/todo/todoSlice.js";
+import {useState} from 'react';
+import {useDispatch} from "react-redux";
+import {removeTodo, toggleTodo, updateTodo} from "../features/todo/todoSlice.js";
 
 function TodoItem({todo}) {
     const [isTodoEditable, setIsTodoEditable] = useState(false);

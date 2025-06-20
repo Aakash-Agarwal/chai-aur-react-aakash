@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TodoForm, TodoItem } from "./components/index.js";
-import { setTodos } from './features/todo/todoSlice.js';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {TodoForm, TodoItem} from "./components/index.js";
+import {setTodos} from './features/todo/todoSlice.js';
 
 function App() {
     const todos = useSelector(state => state.todoReducers.todos)
@@ -32,9 +32,9 @@ function App() {
                     </div>
                     <div className="flex flex-wrap gap-y-3">
                         {todos.map((todo) => (
-                            <div key={todo.id} className='w-full'>
-                                <TodoItem todo={todo} />
-                            </div>
+                                <div key={todo.id} className='w-full'>
+                                    <TodoItem todo={todo}/>
+                                </div>
                             )
                         )}
                     </div>

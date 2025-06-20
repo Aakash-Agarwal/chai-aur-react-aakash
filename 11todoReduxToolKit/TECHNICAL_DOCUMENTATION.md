@@ -2,7 +2,9 @@
 
 ## Introduction
 
-This document explains how Redux Toolkit is used in this Todo List React application. It covers the concepts of store, reducers, actions, selectors, dispatchers, and how React-Redux connects everything. The goal is to help beginners understand the data flow and architecture.
+This document explains how Redux Toolkit is used in this Todo List React application. It covers the concepts of store,
+reducers, actions, selectors, dispatchers, and how React-Redux connects everything. The goal is to help beginners
+understand the data flow and architecture.
 
 ---
 
@@ -29,11 +31,11 @@ The **store** is a centralized place that holds the entire state of your applica
 
 ```js
 // ...existing code...
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import todoReducer from '../features/todo/todoSlice';
 
 export const store = configureStore({
-    reducer: { todoReducers: todoReducer }
+    reducer: {todoReducers: todoReducer}
 });
 // ...existing code...
 ```
@@ -51,10 +53,10 @@ A **slice** is a collection of Redux reducer logic and actions for a single feat
 
 ```js
 // ...existing code...
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import {createSlice, nanoid} from '@reduxjs/toolkit';
 
 const initialState = {
-    todos: [{ id: nanoid(), text: 'Learn Redux', completed: false }]
+    todos: [{id: nanoid(), text: 'Learn Redux', completed: false}]
 };
 
 export const todoSlice = createSlice({
@@ -62,19 +64,19 @@ export const todoSlice = createSlice({
     initialState,
     reducers: {
         addTodo: (state, action) => {
-            state.todos.push({ id: nanoid(), text: action.payload, completed: false });
+            state.todos.push({id: nanoid(), text: action.payload, completed: false});
         },
         removeTodo: (state, action) => {
             state.todos = state.todos.filter(todo => todo.id !== action.payload);
         },
         updateTodo: (state, action) => {
             state.todos = state.todos.map(todo =>
-                todo.id === action.payload.id ? { ...todo, text: action.payload.text } : todo
+                todo.id === action.payload.id ? {...todo, text: action.payload.text} : todo
             );
         },
         toggleTodo: (state, action) => {
             state.todos = state.todos.map(todo =>
-                todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
+                todo.id === action.payload ? {...todo, completed: !todo.completed} : todo
             );
         },
         setTodos: (state, action) => {
@@ -83,7 +85,7 @@ export const todoSlice = createSlice({
     }
 });
 
-export const { addTodo, removeTodo, updateTodo, toggleTodo, setTodos } = todoSlice.actions;
+export const {addTodo, removeTodo, updateTodo, toggleTodo, setTodos} = todoSlice.actions;
 export default todoSlice.reducer;
 // ...existing code...
 ```
@@ -98,13 +100,13 @@ The **Provider** component from React-Redux makes the Redux store available to a
 
 ```jsx
 // ...existing code...
-import { Provider } from "react-redux";
-import { store } from "./app/store";
+import {Provider} from "react-redux";
+import {store} from "./app/store";
 
 createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+    <Provider store={store}>
+        <App/>
+    </Provider>
 );
 // ...existing code...
 ```
@@ -137,8 +139,8 @@ To change state, components **dispatch actions** using the `useDispatch` hook.
 
 ```jsx
 // ...existing code...
-import { useDispatch } from 'react-redux';
-import { addTodo } from "../features/todo/todoSlice.js";
+import {useDispatch} from 'react-redux';
+import {addTodo} from "../features/todo/todoSlice.js";
 
 const dispatch = useDispatch();
 dispatch(addTodo(todoMessage));
@@ -206,6 +208,7 @@ sequenceDiagram
 - **Dispatch** sends actions to update state.
 - React components use **useSelector** and **useDispatch** to interact with Redux.
 
-This architecture keeps your state predictable, centralized, and easy to debug, making your React app scalable and maintainable.
+This architecture keeps your state predictable, centralized, and easy to debug, making your React app scalable and
+maintainable.
 
 ---

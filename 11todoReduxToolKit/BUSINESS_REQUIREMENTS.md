@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-This document outlines the business requirements for the "Todo List" application built with React, Redux Toolkit, and Tailwind CSS. The application enables users to manage their daily tasks efficiently.
+This document outlines the business requirements for the "Todo List" application built with React, Redux Toolkit, and
+Tailwind CSS. The application enables users to manage their daily tasks efficiently.
 
 ---
 
